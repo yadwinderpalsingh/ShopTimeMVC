@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewBag.Title - ShopTime</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                    <a class="navbar-brand" href="#home"><img src="~/Content/images/logo.png" /></a>
+                </div>
+                <div class="shop-badge badge-icons pull-right">
+                    <a href="/Cart/Index/">
+                        <i class="fa fa-shopping-cart"></i>
+                    </a>
+                    <span class="badge badge-sea rounded-x"></span>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/Men/">Home</a></li>
+                        <li><a href="/Men/">Men</a></li>
+                        <li><a href="/Men/">Women</a></li>
+                        <li><a href="/Men/">Kids</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div id="main" class="content container">
+        <div class="row">
+            @RenderBody()
+        </div>
+    </div>
+    <footer>
+        <p>template by <a target="_blank" href="http://yadwindersingh.net">yadwinder</a></p>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
