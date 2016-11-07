@@ -1,4 +1,4 @@
-﻿
+﻿@model List<ShopTimeMVC.Models.Product>
 @{
     ViewBag.Title = "Index";
 }
@@ -9,21 +9,31 @@
     </div>
     <div class="results">
         <div class="row">
-            <div class="col-sm-6 col-md-4 item">
-                <div class="product-img">
-                    <img class="full-width img-responsive" src="~/Content/images/men/1.jpg">
-                </div>
-                <a class="add-to-cart" href="javascript:void()">
-                    <i class="fa fa-shopping-cart"></i> Add to cart
-                </a>
-                <div class="product-description margin-bottom-30">
-                    <div class="pull-left">
-                        <h4 class="title-price">uiufgfyfyufy</h4> <span class="gender text-uppercase">Men</span>
+            @foreach (var product in Model)
+            {
+                <div class="col-sm-6 col-md-4 item">
+                    <div class="product-img">
+                        <img class="full-width img-responsive" src="~/Content/images/@product.Avatar">
                     </div>
-                    <div class="product-price"> <span class="title-price">$10</span> </div>
+                    <a data-id="@product.Id" class="add-to-cart" href="javascript:void()">
+                        <i class="fa fa-shopping-cart"></i> Add to cart
+                    </a>
+                    <div class="product-description margin-bottom-30">
+                        <div class="pull-left">
+                            <h4 class="title-price">@product.Name</h4> <span class="gender text-uppercase">@product.Gender.ToString()</span>
+                        </div>
+                        <div class="product-price"> <span class="title-price">@product.Price.ToString("C")</span> </div>
+                    </div>
                 </div>
-            </div>
+            }
         </div>
     </div>
 </div>
 
+<script>
+    $(function () {
+        $('.add-to-cart').click(function () {
+            var id = $(this).attr('data-id');
+        });
+    });
+</script>

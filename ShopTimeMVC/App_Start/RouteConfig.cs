@@ -14,21 +14,33 @@ namespace ShopTimeMVC
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Men",
-                url: "Men",
+                name: "men",
+                url: "men",
                 defaults: new { controller = "Store", action = "Index", id = UrlParameter.Optional }
             );
 
             routes.MapRoute(
-                name: "Women",
-                url: "Women",
+                name: "women",
+                url: "women",
                 defaults: new { controller = "Store", action = "Index", id = UrlParameter.Optional }
             );
 
             routes.MapRoute(
-                name: "Kids",
-                url: "Kids",
+                name: "kids",
+                url: "kids",
                 defaults: new { controller = "Store", action = "Index", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "home",
+                url: "home",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "cart",
+                url: "cart",
+                defaults: new { controller = "Cart", action = "Index", id = UrlParameter.Optional }
             );
 
             routes.MapRoute(
