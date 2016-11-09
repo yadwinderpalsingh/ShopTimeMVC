@@ -1,7 +1,70 @@
-﻿
+﻿@model ShopTimeMVC.ViewModels.ShoppingCartViewModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Cart";
 }
 
-<h2>Index</h2>
+<div class="col-md-12">
+    <div class="category">
+        <h2>Your Cart</h2>
+        <button class="btn btn-default btn-clear-cart pull-right" @((Model.CartItems.Count < 1) ? "disabled" : "")> <i class="fa fa-times"></i> Clear Cart </button>
+    </div>
+    <div class="results shopping-cart">
+        @if (Model.CartItems.Count > 0)
+        {
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Qty</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.CartItems)
+                        {
+                            <tr id="row-@item.RecordId">
+                                <td class="product-in-table">
+                                    <img class="img-responsive" src="~/Content/images/@item.Product.Avatar" alt="">
+                                    <div class="product-it-in">
+                                        <h3>@item.Product.Name</h3>
+                                    </div>
+                                </td>
+                                <td>@item.Product.Price.ToString("C")</td>
+                                <td>
+                                    <button type="button" class="quantity-button subtract" @((item.Count < 0) ? "disabled" : "")>-</button>
+                                    <input type="text" data-recordId="@item.RecordId" data-id="@item.ProductId" disabled class="quantity-field" value="@item.Count">
+                                    <button type="button" class="quantity-button add" @((item.Count >= 5) ? "disabled" : "")>+</button>
+                                </td>
+                                <td class="shop-red">@((item.Product.Price * item.Count).ToString("C")) </td>
+                                <td>
+                                    <button type="button" class="close" data-id="@item.RecordId"><span>×</span><span class="sr-only">Close</span></button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="sub-total">
+                <div class="row">
+                    <div class="col-sm-3 col-sm-offset-9">
+                        <ul class="list-inline total-result">
+                            <li class="total-price">
+                                <h4>Sub total:</h4>
+                                <div class="total-result-in"> <span>@Model.CartTotal.ToString("C")</span> </div>
+                            </li>
+                        </ul> <a href="/checkout" class="btn btn-default pull-right margin-top-30">Checkout <i class="fa fa-long-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+        }
+        <div class="empty-cart text-center @((Model.CartItems.Count > 0) ? "hidden" : "")">
+            <h3>Your cart is currently empty.</h3> <a class="btn btn-default" href="/home"><i class="fa fa-long-arrow-left"></i> Return to shop</a>
+        </div>
+    </div>
+</div>
 

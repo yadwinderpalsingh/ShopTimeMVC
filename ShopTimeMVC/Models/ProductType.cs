@@ -11,4 +11,19 @@ namespace ShopTimeMVC.Models
         WOMEN,
         KIDS
     }
+
+    public enum ProvinceType
+    {
+        AB,
+        BC,
+        MB,
+        NB,
+        NL,
+        NS,
+        ON,
+        PE,
+        QB,
+        SK,
+        YK
+    }
 }

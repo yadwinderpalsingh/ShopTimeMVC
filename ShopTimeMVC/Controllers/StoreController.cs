@@ -7,15 +7,13 @@ using System.Web.Mvc;
 
 namespace ShopTimeMVC.Controllers
 {
-    public class StoreController : Controller
+    public class StoreController : BaseController
     {
-        Product productService = new Product();
-        // GET: Men
         public ActionResult Index()
         {
             var view = HttpContext.Request.Url.AbsolutePath.ToString().Substring(1);
 
-            return View(productService.GetProductsByGender(view));
+            return View(shopTimeDB.Products.Where(x=>x.Gender.ToString().ToLower() == view).ToList());
         }
     }
 }

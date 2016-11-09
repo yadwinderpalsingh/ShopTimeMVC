@@ -567,9 +567,9 @@ header {
 }
 
 #contact-form .form-group label {
-    float: left;
-    margin: 0;
-    font-size: 16px;
+    position: absolute;
+    top: 10px;
+    font-size: 18px;
     line-height: 24px;
     font-weight: 400;
     color: #687074;
@@ -578,9 +578,13 @@ header {
     transition: all .25s ease-out;
 }
 
-.help-block {
-    float: left;
-    margin: 1px 5px;
+#contact-form .form-control:focus + label {
+    top: -20px;
+    color: #687074;
+}
+
+#contact-form .form-control.input-filled + label {
+    top: -20px;
 }
 
 #contact-form .form-control {
@@ -605,6 +609,57 @@ header {
 #contact-form .form-control:focus {
     border-bottom: 2px solid #ff0000;
 }
+
+#contact-form .form-control::-webkit-input-placeholder {
+    /* WebKit browsers */
+    color: #fff;
+    opacity: .5;
+}
+
+#contact-form .form-control:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: #fff;
+    opacity: .5;
+}
+
+#contact-form .form-control::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: #fff;
+    opacity: .5;
+}
+
+#contact-form .form-control:-ms-input-placeholder {
+    /* Internet Explorer 10+ */
+    color: #fff;
+    opacity: .5;
+}
+
+#contact-form .form-control:focus::-webkit-input-placeholder {
+    opacity: 1;
+}
+
+#contact-form .form-control:focus:-moz-placeholder {
+    opacity: 1;
+}
+
+#contact-form .form-control:focus::-moz-placeholder {
+    opacity: 1;
+}
+
+#contact-form .form-control:focus:-ms-placeholder {
+    opacity: 1;
+}
+
+
+#contact-form .form-group .error-message {
+    margin-left: 8px;
+    color: #ff0000;
+}
+
+#contact-form {
+    position: relative;
+}
+
 
 
 /*---------------------------------------

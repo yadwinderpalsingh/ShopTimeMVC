@@ -1,98 +1,101 @@
-// yadwinder Pal Singh
+// Yadwinder Pal Singh
 // Gurjit Singh Ghangura
 
 
 $(document).ready(function () {
-       
+
     // add item to cart
     $('.item .add-to-cart').on('click', function () {
-        var id = $(this).attr('data-id');
-        var url = '../ajax.php?id=' + id + '&action=add';
-        $.ajax({
-            type: 'GET',
-            url: url,
-            success: function (data) {
-                $('.shop-badge .badge').text(data);
-            }
-        }).done(function () {
-            toastr.options = {
-                'positionClass': 'toast-bottom-right'
-            }, toastr.info('Successfully added to cart!');
-        });
+        debugger;
+        var recordToAdd = $(this).attr('data-id');
+
+        if (recordToAdd != '') {
+
+            // Perform the ajax post
+            $.post("/addtocart", { "id": recordToAdd },
+                function (data) {
+                    // Update the page elements
+                    if (data.CartCount > 0) {
+                        $('.shop-badge .badge').text(data.CartCount);
+                        $('.bottom-right').notify({
+                            message: { text: data.Message }
+                        }).show();
+                    }
+                }
+            );
+        }
     });
-    
-    
+
+
     // clear cart
     $('.btn-clear-cart').click(function () {
-        var url = '../ajax.php?action=clearcart';
-        $.ajax({
-            type: 'GET',
-            url: url
-        }).done(function () {
-            window.location.reload();
-        });
+        $.post("/clearcart", 
+            function (data) {
+                window.location.href = data;
+            }
+        );
     });
-    
-    
+
+
     // update quantity and sub total
     $('.quantity-field').change(function () {
         var id = $(this).attr('data-id');
+        var record = $(this).attr('data-recordId');
         var quantity = $(this).val();
         var parentElem = $(this).parent().parent();
-        var url = '../ajax.php?id=' + id + '&quantity=' + quantity + '&action=update';
-        $.ajax({
-            type: 'GET',
-            url: url,
-            success: function (data) {
-                data = JSON.parse(data);
-                parentElem.find('.shop-red').html('$' + data.price);
-                $('.total-result-in').html('$ ' + data.subTotal);
+        $.post("/updatecart", { "productId": id, "recordId": record, "count": quantity },
+            function (data) {
+                window.location.href = data;
             }
-        }).done(function () {
-            toastr.info('Successfully added to cart!');
-        });
+        );
     });
-    
+
     // increment quantity
     $('.quantity-button.add').click(function () {
-        if($(this).prev('input').val() < 5) {
+        if ($(this).prev('input').val() < 5) {
             $(this).prev('input').val(parseInt($(this).prev('input').val()) + 1);
             $(this).prev('input').trigger('change');
         }
-        else{
-            toastr.info('You have reached the limit');
+        else {
+            $('.bottom-right').notify({
+                message: { text: 'You have reached the limit' }
+            }).show();
         }
     });
-    
+
     // decrement quantity
     $('.quantity-button.subtract').click(function () {
-        if($(this).next('input').val() > 1) {
+        if ($(this).next('input').val() > 1) {
             $(this).next('input').val(parseInt($(this).next('input').val()) - 1);
             $(this).next('input').trigger('change');
         }
     });
-    
+
     // remove item from cart
-    $('.shopping-cart .close').click(function () {
-        var id = $(this).attr('data-id');
-        var url = '../ajax.php?id=' + id + '&action=delete';
-        $.ajax({
-            type: 'GET',
-            url: url
-        }).done(function () {
-            window.location.reload();
-        });
+    $(".shopping-cart .close").click(function () {
+        // Get the id from the link
+        var recordToDelete = $(this).attr("data-id");
+
+        if (recordToDelete != '') {
+
+            // Perform the ajax post
+            $.post("/remove", { "id": recordToDelete },
+                function (data) {
+                    window.location.href = data;
+                }
+            );
+        }
     });
-    
+
     // billing information 
-    
-    
+
+
     var hasError = false;
-    
+
     $('.checkout').click(function () {
         $('#contact-form').submit();
     });
-    
+
     $('#contact-form .form-control').each(function () {
         if ($.trim($(this).val()) == '') {
             $(this).removeClass('input-filled');
@@ -101,7 +104,7 @@ $(document).ready(function () {
             $(this).addClass('input-filled');
         }
     });
-    
+
     $('#contact-form .form-control').on('blur', function () {
         if ($.trim($(this).val()) == '') {
             $(this).removeClass('input-filled');
@@ -110,11 +113,11 @@ $(document).ready(function () {
             $(this).addClass('input-filled');
         }
     });
-    
+
     $('#contact-form .form-control').on('focus', function () {
         $(this).parent('.controls').find('.error-message').fadeOut(300);
     });
-    
+
     $('#contact-form').submit(function () {
         hasError = false;
         if ($('#contact-form').hasClass('clicked')) {
@@ -157,99 +160,11 @@ $(document).ready(function () {
             $('#contact-form').removeClass('clicked');
         }
         else {
-            
-            // invoice for user 
-            $('.invoice-info #name').append($('#first-name').val() + ' ' + $('#last-name').val());
-            $('.invoice-info #email').append($('#email').val());
-            $('.invoice-info #phone').append($('#phone').val());
-            $('.invoice-info #address').append($('#address').val());
-            $('.invoice-info #city').append($('#city').val());
-            $('.invoice-info #province').append($('#province').val());
-            $('.invoice-info #postal-code').append($('#postal-code').val());
-            
-            var subTotal = parseFloat($('#sub-total').attr('data-total')).toFixed(2);
-            
-            var tax;
-            if ($('#province').val() == 'Alberta') {
-                tax = (subTotal * 0.05).toFixed(2);
-            }
-            else if ($('#province').val() == 'British Columbia') {
-                tax = (subTotal * 0.05).toFixed(2);
-            }
-            else if ($('#province').val() == 'Manitoba') {
-                tax = (subTotal * 0.05).toFixed(2);
-            }
-            else if ($('#province').val() == 'New Brunswick') {
-                tax = (subTotal * 0.13).toFixed(2);
-            }
-            else if ($('#province').val() == 'Newfoundland And Labrador') {
-                tax = (subTotal * 0.13).toFixed(2);
-            }
-            else if ($('#province').val() == 'Nova Scotia') {
-                tax = (subTotal * 0.15).toFixed(2);
-            }
-            else if ($('#province').val() == 'Ontario') {
-                tax = (subTotal * 0.13).toFixed(2);
-            }
-            else if ($('#province').val() == 'Prince Edward Island') {
-                tax = (subTotal * 0.14).toFixed(2);
-            }
-            else if ($('#province').val() == 'Quebec') {
-                tax = (subTotal * 0.05).toFixed(2);
-            }
-            else if ($('#province').val() == 'Saskatchewan') {
-                tax = (subTotal * 0.05).toFixed(2);
-            }
-            else if ($('#province').val() == 'Yukon') {
-                tax = (subTotal * 0.05).toFixed(2);
-            }
-            
-            $('#tax').append('$ ' + tax);
-            
-            var shipping = 0,
-                deliveryDay = 0;
-            
-            if (subTotal > 0 && subTotal < 25) {
-                shipping = 3.00;
-                deliveryDay = 1;
-            }
-            else if (subTotal > 25.01 && subTotal < 50) {
-                shipping = 4.00;
-                deliveryDay = 3;
-            }
-            else if (subTotal > 50.01 && subTotal < 75) {
-                shipping = 5.00;
-                deliveryDay = 1;
-            }
-            else if (subTotal > 75) {
-                shipping = 6.00;
-                deliveryDay = 4;
-            }
-            
-            var date = new Date();
-            
-            date.setDate(date.getDate() + deliveryDay);
-            
-            $('#del-date').append(date.getFullYear() + '/' + (date.getMonth() < 10 ? '0' : '') + date.getMonth() + '/' + (date.getDay() < 10 ? '0' : '') + date.getDay());
-            
-            $('#shipping').append('$ ' + parseFloat(shipping).toFixed(2));
-            var total = parseFloat(tax) + parseFloat(subTotal) + parseFloat(shipping);
-            $('#total').append('$ ' + total.toFixed(2));
-            $('.billing-section').addClass('hidden');
-            $('.thank-you').removeClass('hidden');
-            
-            endShop();
+            debugger;
+            $.post("/checkout", $('#contact-form').serialize(), function (data) {
+                window.location.href = data;
+            });
         }
         return false;
     });
 });
-
-function endShop(){
-    var url = '../ajax.php?action=clearcart';
-    $.ajax({
-        type: 'GET',
-        url: url
-    }).done(function () {
-        $('.shop-badge .badge').text('');
-    });
-}

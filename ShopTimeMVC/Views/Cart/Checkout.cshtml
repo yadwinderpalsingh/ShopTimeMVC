@@ -1,0 +1,98 @@
+﻿
+@{
+    ViewBag.Title = "Checkout";
+}
+
+<div class="col-md-12">
+    <div class="billing-section">
+        <div class="category">
+            <h2>Billing and Shipping Info</h2>
+        </div>
+        <div class="results">
+            <form id="contact-form" class="col-sm-10 col-sm-offset-1">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="controls">
+                                <input id="first-name" name="FirstName" class="form-control requiredField" type="text" data-error-empty="is required">
+                                <label class="control-label" for="first-name">First Name</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="controls">
+                                <input id="email" name="Email" class="form-control requiredField" type="email" data-error-empty="is required" data-error-invalid="is invalid">
+                                <label class="control-label" for="email">Email</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="controls">
+                                <input id="last-name" name="LastName" class="form-control requiredField" type="text" data-error-empty="is required" data-error-invalid="is invalid">
+                                <label class="control-label" for="last-name">Last Name</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="controls">
+                                <input id="phone" name="Phone" class="form-control requiredField" type="tel" data-error-empty="is required" data-error-invalid="is invalid - format: xxx-xxx-xxxx">
+                                <label class="control-label" for="phone">Phone</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="controls">
+                        <input id="address" name="Address" class="form-control requiredField" type="text" data-error-empty="is required">
+                        <label class="control-label" for="address">Address</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <div class="controls">
+                                <input id="city" name="City" class="form-control requiredField" type="text" data-error-empty="is required">
+                                <label class="control-label" for="city">City</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <div class="controls">
+                                <select id="province" name="Province" class="form-control">
+                                    <option value="AB">Alberta</option>
+                                    <option value="BC">British Columbia</option>
+                                    <option value="MB">Manitoba</option>
+                                    <option value="NB">New Brunswick</option>
+                                    <option value="NL">Newfoundland And Labrador</option>
+                                    <option value="NS">Nova Scotia</option>
+                                    <option value="ON">Ontario</option>
+                                    <option value="PE">Prince Edward Island</option>
+                                    <option value="QB">Quebec</option>
+                                    <option value="SK">Saskatchewan</option>
+                                    <option value="YK">Yukon</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <div class="controls">
+                                <input id="postal-code" name="PostalCode" class="form-control requiredField" type="text" data-error-empty="is required" data-error-invalid="is invalid">
+                                <label class="control-label" for="postal-code">Postal Code</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button id="submit" type="submit" class="hidden">Send It</button>
+            </form>
+        </div>
+        <div class="sub-total">
+            <div class="row">
+                <div class="col-sm-3 col-sm-offset-9">
+                    <button class="btn btn-default checkout pull-right margin-top-30">Finish <i class="fa fa-long-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

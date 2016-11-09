@@ -9,7 +9,7 @@ namespace ShopTimeMVC
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-1.9.1.min.js"));
+                        "~/Scripts/js/jquery-1.9.1.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -21,11 +21,13 @@ namespace ShopTimeMVC
 
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
                       "~/Scripts/js/bootstrap.min.js",
+                      "~/Scripts/js/bootstrap-notify.js",
                       "~/Scripts/js/script.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/css/bootstrap.min.css",
                       "~/Content/css/font-awesome.min.css",
+                      "~/Content/css/bootstrap-notify.css",
                       "~/Content/css/style.css"));
         }
     }

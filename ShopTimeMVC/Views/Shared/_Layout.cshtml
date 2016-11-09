@@ -17,10 +17,7 @@
                     <a class="navbar-brand" href="#home"><img src="~/Content/images/logo.png" /></a>
                 </div>
                 <div class="shop-badge badge-icons pull-right">
-                    <a href="/Cart/Index/">
-                        <i class="fa fa-shopping-cart"></i>
-                    </a>
-                    <span class="badge badge-sea rounded-x"></span>
+                    @{Html.RenderAction("CartSummary","Cart");}
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
@@ -41,9 +38,9 @@
     <footer>
         <p>template by <a target="_blank" href="http://yadwindersingh.net">yadwinder</a></p>
     </footer>
-
+    <div class='notifications bottom-right'></div>
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/js")
     @RenderSection("scripts", required: false)
 </body>
 </html>
